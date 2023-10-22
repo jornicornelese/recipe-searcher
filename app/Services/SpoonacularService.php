@@ -21,7 +21,8 @@ class SpoonacularService implements RecipeSearcher
     }
 
     /**
-     * Search for recipes using the Spoonacular Complex Search API
+     * Search for recipes using the Spoonacular Complex Search API.
+     * Returns an array of recipes
      *
      * @param RecipeSearchDTO $dto
      * @return array $recipes

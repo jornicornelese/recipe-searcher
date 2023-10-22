@@ -15,6 +15,9 @@ class SearchedRecipeController extends Controller
     ) {
     }
 
+    /**
+     * Return a random recipe based on the search criteria
+     */
     public function __invoke(SearchRecipeRequest $request): RecipeResource
     {
         $dto = new RecipeSearchDTO(
@@ -26,6 +29,7 @@ class SearchedRecipeController extends Controller
             excludeIngredients: $request->validated('excludeIngredients') ?: [],
             type: $request->validated('type') ?: 'main course',
         );
+
         $recipe = collect($this->recipeSearcher->search($dto)['results'])->shuffle()->first();
 
         abort_if(!$recipe, 404, 'No recipe found');
