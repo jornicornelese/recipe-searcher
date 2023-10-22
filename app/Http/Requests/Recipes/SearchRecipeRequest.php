@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Recipes;
 
+use App\Enums\CuisineList;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class SearchRecipeRequest extends FormRequest
 {
@@ -14,10 +16,12 @@ class SearchRecipeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'query' => 'string|min:3|max:255',
-            'cuisine' => 'string|min:3|max:255',
+            'query' => 'nullable|string|max:255',
+            'cuisine' => ['nullable', 'string', new Enum(CuisineList::class)],
+            'maxReadyTime' => 'integer|min:0',
             'includeIngredients' => 'array',
             'excludeIngredients' => 'array',
+            'vegetarian' => 'boolean',
             'type' => 'string|min:3|max:255',
         ];
     }

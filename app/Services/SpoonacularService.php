@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use App\DTO\RecipeSearchDTO;
+use Illuminate\Support\Facades\Http;
 use App\Exceptions\RecipeApiException;
 use App\Interfaces\Recipes\RecipeSearcher;
-use Illuminate\Support\Facades\Http;
 
 class SpoonacularService implements RecipeSearcher
 {
@@ -19,19 +20,28 @@ class SpoonacularService implements RecipeSearcher
         }
     }
 
-    public function search(string $query, int $page = 1, int $perPage = 10): array
+    /**
+     * Search for recipes using the Spoonacular Complex Search API
+     *
+     * @param RecipeSearchDTO $dto
+     * @return array $recipes
+     */
+    public function search(RecipeSearchDTO $dto): array
     {
         $response = Http::get(config('recipes.connections.spoonacular.url') . '/recipes/complexSearch', [
             'apiKey' => config('recipes.connections.spoonacular.key'),
-            'query' => $query,
-            'includeIngredients' => 'tomato,cheese',
+            'query' => $dto->query,
+            'includeIngredients' => implode(',', $dto->includeIngredients),
+            'excludeIngredients' => implode(',', $dto->excludeIngredients),
+            'cuisine' => $dto->cuisine,
+            'type' => $dto->type,
+            'maxReadyTime' => $dto->maxReadyTime,
+            'diet' => $dto->vegetarian ? 'vegetarian' : '',
             'instructionsRequired' => 'true',
             'fillIngredients' => 'false',
             'addRecipeInformation' => 'true',
             'addRecipeNutrition' => 'true',
-            'maxReadyTime' => 40,
-            'number' => $perPage,
-            'offset' => ($page - 1) * $perPage,
+            'number' => 100,
         ]);
 
         return $response->json();

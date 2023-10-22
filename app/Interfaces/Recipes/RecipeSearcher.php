@@ -2,7 +2,9 @@
 
 namespace App\Interfaces\Recipes;
 
+use App\DTO\RecipeSearchDTO;
+
 interface RecipeSearcher
 {
-    public function search(string $query, int $page = 1, int $perPage = 10): array;
+    public function search(RecipeSearchDTO $searchDTO): array;
 }

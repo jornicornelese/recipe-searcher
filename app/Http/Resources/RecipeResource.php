@@ -14,6 +14,10 @@ class RecipeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $recipe = parent::toArray($request);
+
+        $recipe['summary'] = strip_tags($recipe['summary']);
+
+        return $recipe;
     }
 }
