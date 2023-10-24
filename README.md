@@ -6,6 +6,13 @@ This project has been created to test with Inertia.js and Tailwind and to make a
 
 Run the project like any other Laravel project.
 
+```
+composer install
+npm install
+npm run dev
+php artisan serve
+```
+
 Create a .env file with the following variables, you can get the API key and URL from [Spoonacular](https://spoonacular.com/food-api)
 
 ```
