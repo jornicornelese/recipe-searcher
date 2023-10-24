@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('api.')
+Route::name('api.')->middleware(['api', 'auth:sanctum'])
     ->group(function () {
         Route::post('recipes/search', SearchedRecipeController::class)->name('recipes.search');
     });
