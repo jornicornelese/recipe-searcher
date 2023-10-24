@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\DTO\RecipeSearchDTO;
+use App\DTO\Recipes\RecipeSearchDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecipeResource;
 use App\Interfaces\Recipes\RecipeSearcher;
@@ -30,7 +30,7 @@ class SearchedRecipeController extends Controller
             type: $request->validated('type') ?: 'main course',
         );
 
-        $recipe = collect($this->recipeSearcher->search($dto)['results'])->shuffle()->first();
+        $recipe = $this->recipeSearcher->search($dto)->shuffle()->first();
 
         abort_if(!$recipe, 404, 'No recipe found');
 

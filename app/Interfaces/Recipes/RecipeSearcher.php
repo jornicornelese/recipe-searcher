@@ -2,9 +2,15 @@
 
 namespace App\Interfaces\Recipes;
 
-use App\DTO\RecipeSearchDTO;
+use App\DTO\Recipes\RecipeDTO;
+use Illuminate\Support\Collection;
+use App\DTO\Recipes\RecipeSearchDTO;
 
 interface RecipeSearcher
 {
-    public function search(RecipeSearchDTO $searchDTO): array;
+    /**
+     * @param RecipeSearchDTO $searchDTO
+     * @return Collection<RecipeDTO> $recipes
+     */
+    public function search(RecipeSearchDTO $searchDTO): Collection;
 }

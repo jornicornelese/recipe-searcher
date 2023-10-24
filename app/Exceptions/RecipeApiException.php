@@ -15,4 +15,9 @@ class RecipeApiException extends Exception
     {
         return new self('The Recipe API URL is not set.');
     }
+
+    public static function apiRequestFailed(string $message): self
+    {
+        return new self("The Recipe API request failed with message: {$message}");
+    }
 }
